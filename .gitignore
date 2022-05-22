@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Javaweb out folder ###
+out
