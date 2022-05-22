@@ -7,3 +7,16 @@
 ### JSP
 ### Cookie 
 ### Session
+### WebSocket
+
+## 第一阶段基本 Cookie + Session + SSM + JSP
+## 第二阶段     + WebSocket
+## 第三阶段     + 把WebSocket改为基于Netty
+## 第四阶段     + Maven
+## 第五阶段     + 改为Springboot项目
+
+### 新路历程
+20220516 开启第一阶段
+20220516 23:46 把项目init 成功了
+
+## 借鉴的大佬
