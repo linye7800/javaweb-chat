@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
   </head>
   <body>
-  $END$
+  <form action="LoginServlet" method="post">
+    username: <input type="text" name="username"/><br/>
+    <input type="button" value="Login">
+  </form>
   </body>
 </html>
