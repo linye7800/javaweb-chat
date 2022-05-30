@@ -13,7 +13,8 @@
   </head>
   <body>
   <form action="LoginServlet" method="post">
-    username: <input type="text" name="username"/><br/>
+    Username: <input type="text" name="username"/><br/>
+    <input type="checkbox" name="chkUserRemember" value="1"/> 记住我，7天内免登陆
     <input type="submit" value="Login">
   </form>
 
