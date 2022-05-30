@@ -34,7 +34,15 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("session_username", username);
         // 3. 设置session有限期 默认15分钟
         session.setMaxInactiveInterval(5);
-        // 跳转到验证页面
-        response.sendRedirect("sessionUser.jsp");
+        // 4. 创建cookie
+        Cookie cookie = new Cookie("cookie_name", username);
+        // 5. 设定cookie有效期
+        cookie.setMaxAge(10);
+        // 6. 写入cookie到浏览器
+        response.addCookie(cookie);
+        // 跳转到验证页面 - session
+//        response.sendRedirect("sessionUser.jsp");
+        // 跳转到验证页面 - cookie
+        response.sendRedirect("cookieUser.jsp");
     }
 }

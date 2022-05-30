@@ -16,5 +16,8 @@
     username: <input type="text" name="username"/><br/>
     <input type="submit" value="Login">
   </form>
+
+  <a href="sessionUser.jsp"> 验证session  </a>
+  <a href="cookieUser.jsp"> 验证cookie </a>
   </body>
 </html>
