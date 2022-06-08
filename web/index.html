@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>用户登录</title>
+  <script type="text/javascript" src="WEB-INF/js/jquery-3.5.1.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $("#login").click(function () {
+        var $name = $("#requestUsername").val();
+        var $password = $("#requestPassword").val();
+        // request login
+        userLogin($name, $password);
+        $("#spnMsg").html("login... ...").show().css({
+          "top": "20%",
+          "left": "50%"
+        });
+      });
+
+      function userLogin(name, pwd) {
+        $.ajax({
+          url : "CharServlet",
+          type : "post",
+          data : {
+            username: name,
+            password: pwd
+          },
+          success : function (data) {
+            alert(data);
+          }
+        });
+      }
+
+    })
+  </script>
+
+</head>
+<body>
+  <div class="divFrame">
+    <h3>user login</h3>
+    username: <input id="requestUsername" type="text" name="username"> <br/>
+    password: <input id="requestPassword" type="password" name="pwd"> <br/>
+    <input id="login" type="button" value="Login"> <br/>
+    <span id="spnMsg">Tips</span>
+  </div>
+</body>
+</html>
