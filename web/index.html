@@ -23,12 +23,13 @@
           url : "ChatServlet",
           type : "post",
           data : {
+            op: "login",
             username: name,
             password: pwd
           },
           success : function (data) {
             if (data === "success") {
-              window.location = "ChatMain.html";
+              window.location = "chatMain.html";
             } else {
               alert(data)
               $("#spnMsg").hide();

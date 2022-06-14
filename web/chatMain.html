@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Chat Chat</title>
+  <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <style type="text/css">
+
+  </style>
+</head>
+<body>
+  <div id="message"></div>
+  <div id="divMain">
+    <div class="divTop">
+      <div class="divL">
+        <h2>Chat Box</h2>
+        <div class="divShow" id="divCount"></div>
+      </div>
+    </div>
+
+    <div class="divBot">
+      <table>
+        <tr>
+          <td colspan="2" id="divFace" class="pd"></td>
+        </tr>
+        <tr>
+          <td>
+            <textarea id="txtContent" class="txt" rows="3" cols="64"></textarea>
+          </td>
+          <td>
+            <input id="button1" type="button" value="发送" class="btn" />
+            <input id="button2" type="button" value="Logout" class="btn" />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <span id="spnMsg" class="clsTip">真在发送数据...</span>
+  </div>
+</body>
+</html>
