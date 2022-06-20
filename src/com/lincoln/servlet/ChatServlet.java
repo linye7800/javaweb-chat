@@ -1,6 +1,12 @@
 package com.lincoln.servlet;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -47,7 +53,11 @@ public class ChatServlet extends HttpServlet {
                     break;
                 case "send" :
                     // 接收消息
-                    rec();
+                    try {
+                        rec();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 default:
                     break;
@@ -65,6 +75,10 @@ public class ChatServlet extends HttpServlet {
         // 获取用户password
         String password = request.getParameter("password");
         if ("123".equals(password)) {
+            // 获取session中的用户信息
+            HttpSession session = request.getSession();
+            // 把用户信息放入session
+            session.setAttribute("username", username);
             response.getWriter().print("success");
         } else {
             response.getWriter().print("username or password error!!!");
@@ -72,11 +86,48 @@ public class ChatServlet extends HttpServlet {
     }
 
     /**
-     * 用户 收消息
+     * 服务 收消息
      */
-    public void rec() {
+    public void rec() throws Exception{
         // 获取用户发送的消息
         String msg = request.getParameter("msg");
-        System.out.println("msg: " + msg);
+//        System.out.println("msg: " + msg);
+        // 把消息放在全局对象里面
+        ServletContext sc = request.getServletContext();
+        List<String> chatList = (List<String>)sc.getAttribute("MsgList");
+        if (chatList == null) {
+            // 第一条消息
+            chatList = new ArrayList<String>();
+        }
+        // 获取session中的用户信息
+        HttpSession session = request.getSession();
+        String username = String.valueOf(session.getAttribute("username"));
+        // 发送时间
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        // 组装消息
+        String content = username + " 于 " + sdf.format(date) + "说： " + msg;
+        // 将消息内容加入到list
+        chatList.add(content);
+        // 更新到全局对象
+        sc.setAttribute("MsgList", chatList);
+        response.getWriter().print(getMessageList());
+    }
+
+    /**
+     * 获取聊天列表的内容
+     * @return
+     */
+    public String getMessageList() {
+        StringBuilder sb = new StringBuilder();
+        ServletContext sc = request.getServletContext();
+        List<String> chatList = (List<String>)sc.getAttribute("MsgList");
+        if (null != chatList) {
+            for (String temp : chatList) {
+                sb.append(temp);
+                sb.append("<br/>");
+            }
+        }
+        return String.valueOf(sb);
     }
 }

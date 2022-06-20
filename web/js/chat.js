@@ -22,10 +22,32 @@ $(function (){
         msg: content
       },
       success: function (data) {
+        // if (data === "success") {
+        //   // alert("Send success!!!")
+        //   $("#divCount").html(data);
+        // } else {
+        //   alert("Send message fail!!!");
+        //   return false;
+        // }
+        $("#divCount").html(data);
+      }
+    });
+  }
+
+  // send message
+  function getMessage(content) {
+    $.ajax({
+      type: "post",
+      url: "ChatServlet",
+      data : {
+        op : "getMsg",
+        msg: content
+      },
+      success: function (data) {
         if (data === "success") {
-          alert("Send success!!!")
+          alert("Get success!!!")
         } else {
-          alert("Send message fail!!!");
+          alert("Get message fail!!!");
           return false;
         }
       }
