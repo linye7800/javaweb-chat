@@ -42,7 +42,8 @@ public class ChatServlet extends HttpServlet {
         this.request = request;
         this.response = response;
             String op = request.getParameter("op");
-            String result = "";// 返回给浏览器的内容
+            // 返回给浏览器的内容
+            String result = "";
             switch (op) {
                 case "login" :
                     try {
@@ -63,7 +64,17 @@ public class ChatServlet extends HttpServlet {
                 case "get" :
                     // 接收消息
                     try {
-                        result = getMessageList();// 获取聊天列表的内容
+                        // 获取聊天列表的内容
+                        result = getMessageList();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case "userList" :
+                    // 接收消息
+                    try {
+                        // 获取聊天列表的内容
+                        result = getUserListList();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -90,6 +101,8 @@ public class ChatServlet extends HttpServlet {
             HttpSession session = request.getSession();
             // 把用户信息放入session
             session.setAttribute("username", username);
+            // 添加用户名到在线列表
+            addUserList(username);
             return "success";
         } else {
             return "username or password error!!!";
@@ -141,4 +154,37 @@ public class ChatServlet extends HttpServlet {
         }
         return String.valueOf(sb);
     }
+
+    /**
+     * add user to userList
+     * @param uname
+     */
+    public void addUserList(String uname) {
+        ServletContext servletContext  = request.getServletContext();
+        List<String> userList = (List<String>)servletContext.getAttribute("UserList");
+        if (userList == null) {
+            // 第一个用户
+            userList = new ArrayList<>();
+        }
+        // 添加用户名到在线列表
+        userList.add(uname);
+        servletContext.setAttribute("UserList", userList);
+    }
+
+    /**
+     * get user list
+     */
+    public String getUserListList() {
+        StringBuilder sb = new StringBuilder();
+        ServletContext servletContext  = request.getServletContext();
+        List<String> userList = (List<String>)servletContext.getAttribute("UserList");
+        if (null != userList) {
+            for (String username : userList) {
+                sb.append(username);
+                sb.append("<br/>");
+            }
+        }
+        return String.valueOf(sb);
+    }
+
 }

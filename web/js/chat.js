@@ -2,6 +2,7 @@ $(function (){
 
   // 每隔两秒钟获取聊天列表
   setInterval(getMessage, 2000);
+  setInterval(getUserList, 2000);
 
   // 发送消息的点击事件
   $("#button1").click(function () {
@@ -38,7 +39,7 @@ $(function (){
     });
   }
 
-  // send message
+  // get message
   function getMessage() {
     $.ajax({
       type: "post",
@@ -52,6 +53,18 @@ $(function (){
     });
   }
 
-
+  // get user list
+  function getUserList() {
+    $.ajax({
+      type: "post",
+      url: "ChatServlet",
+      data : {
+        op : "userList"
+      },
+      success: function (data) {
+        $("#divOnline").html(data);
+      }
+    });
+  }
 
 });
