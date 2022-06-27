@@ -1,5 +1,8 @@
 $(function (){
 
+  // 每隔两秒钟获取聊天列表
+  setInterval(getMessage, 2000);
+
   // 发送消息的点击事件
   $("#button1").click(function () {
     var content = $("#txtContent").val();
@@ -30,28 +33,25 @@ $(function (){
         //   return false;
         // }
         $("#divCount").html(data);
+        $("#txtContent").val("");
       }
     });
   }
 
   // send message
-  function getMessage(content) {
+  function getMessage() {
     $.ajax({
       type: "post",
       url: "ChatServlet",
       data : {
-        op : "getMsg",
-        msg: content
+        op : "get"
       },
       success: function (data) {
-        if (data === "success") {
-          alert("Get success!!!")
-        } else {
-          alert("Get message fail!!!");
-          return false;
-        }
+        $("#divCount").html(data);
       }
     });
   }
+
+
 
 });

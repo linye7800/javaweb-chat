@@ -34,7 +34,7 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws UnsupportedEncodingException {
+            throws IOException {
          // 解决中文乱码
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
@@ -42,11 +42,12 @@ public class ChatServlet extends HttpServlet {
         this.request = request;
         this.response = response;
             String op = request.getParameter("op");
+            String result = "";// 返回给浏览器的内容
             switch (op) {
                 case "login" :
                     try {
                         // login
-                        login();
+                        result = login();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -54,7 +55,15 @@ public class ChatServlet extends HttpServlet {
                 case "send" :
                     // 接收消息
                     try {
-                        rec();
+                        result = rec();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case "get" :
+                    // 接收消息
+                    try {
+                        result = getMessageList();// 获取聊天列表的内容
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -63,13 +72,15 @@ public class ChatServlet extends HttpServlet {
                     break;
             }
 
+            response.getWriter().print(result);
+
     }
 
     /**
      * 用户 login
      * @throws Exception
      */
-    public void login() throws Exception{
+    public String login() throws Exception{
         // 获取用户登录名
         String username = request.getParameter("username");
         // 获取用户password
@@ -79,16 +90,16 @@ public class ChatServlet extends HttpServlet {
             HttpSession session = request.getSession();
             // 把用户信息放入session
             session.setAttribute("username", username);
-            response.getWriter().print("success");
+            return "success";
         } else {
-            response.getWriter().print("username or password error!!!");
+            return "username or password error!!!";
         }
     }
 
     /**
      * 服务 收消息
      */
-    public void rec() throws Exception{
+    public String rec() throws Exception{
         // 获取用户发送的消息
         String msg = request.getParameter("msg");
 //        System.out.println("msg: " + msg);
@@ -111,7 +122,7 @@ public class ChatServlet extends HttpServlet {
         chatList.add(content);
         // 更新到全局对象
         sc.setAttribute("MsgList", chatList);
-        response.getWriter().print(getMessageList());
+        return  getMessageList();
     }
 
     /**
