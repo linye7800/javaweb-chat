@@ -1,22 +1,49 @@
 $(function (){
 
-  // 每隔两秒钟获取聊天列表
-  setInterval(getMessage, 2000);
-  setInterval(getUserList, 2000);
+  // 每隔两秒钟获取聊天列表 -- 轮训的方式获取消息
+  // setInterval(getMessage, 2000);
+  // setInterval(getUserList, 2000);
+
+  // 定义webSocket客户端连接对象  -- websocket方式
+  var websocket = null;
+
+  initWebsocket();
+
+  function initWebsocket() {
+    // 向服务器发送连接
+    websocket = new WebSocket("ws://localhost:8080/c_s_s_jsp/websocket")
+
+    // 连接成功
+    websocket.onopen = function () {
+    }
+
+    // 收到服务器的消息
+    websocket.onmessage = function (event) {
+      $("#divCount").html(event.data);
+    }
+
+    // 关闭
+    websocket.onclose = function () {
+    }
+  }
+
+    function websocketSendMessage() {
+
+    }
 
   // 发送消息的点击事件
   $("#button1").click(function () {
     var content = $("#txtContent").val();
     if (content !== "") {
       // 发送ajax消息
-      sendMessage(content);
+      // sendMessage(content);
     } else {
       alert("Send content can't empty!!!");
       return false;
     }
   });
 
-  // send message
+  // send message（ajax）
   function sendMessage(content) {
     $.ajax({
       type: "post",
