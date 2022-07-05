@@ -1,10 +1,7 @@
 package com.lincoln.servlet;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.*;
@@ -118,7 +115,7 @@ public class ChatServlet extends HttpServlet {
 //        System.out.println("msg: " + msg);
         // 把消息放在全局对象里面
         ServletContext sc = request.getServletContext();
-        List<String> chatList = (List<String>)sc.getAttribute("MsgList");
+        List<String> chatList = (List<String>)sc.getAttribute("msgList");
         if (chatList == null) {
             // 第一条消息
             chatList = new ArrayList<String>();
@@ -134,7 +131,7 @@ public class ChatServlet extends HttpServlet {
         // 将消息内容加入到list
         chatList.add(content);
         // 更新到全局对象
-        sc.setAttribute("MsgList", chatList);
+        sc.setAttribute("msgList", chatList);
         return  getMessageList();
     }
 
@@ -145,7 +142,7 @@ public class ChatServlet extends HttpServlet {
     public String getMessageList() {
         StringBuilder sb = new StringBuilder();
         ServletContext sc = request.getServletContext();
-        List<String> chatList = (List<String>)sc.getAttribute("MsgList");
+        List<String> chatList = (List<String>)sc.getAttribute("msgList");
         if (null != chatList) {
             for (String temp : chatList) {
                 sb.append(temp);
@@ -161,14 +158,14 @@ public class ChatServlet extends HttpServlet {
      */
     public void addUserList(String uname) {
         ServletContext servletContext  = request.getServletContext();
-        List<String> userList = (List<String>)servletContext.getAttribute("UserList");
+        List<String> userList = (List<String>)servletContext.getAttribute("userList");
         if (userList == null) {
             // 第一个用户
             userList = new ArrayList<>();
         }
         // 添加用户名到在线列表
         userList.add(uname);
-        servletContext.setAttribute("UserList", userList);
+        servletContext.setAttribute("userList", userList);
     }
 
     /**
@@ -177,7 +174,7 @@ public class ChatServlet extends HttpServlet {
     public String getUserListList() {
         StringBuilder sb = new StringBuilder();
         ServletContext servletContext  = request.getServletContext();
-        List<String> userList = (List<String>)servletContext.getAttribute("UserList");
+        List<String> userList = (List<String>)servletContext.getAttribute("userList");
         if (null != userList) {
             for (String username : userList) {
                 sb.append(username);

@@ -6,7 +6,16 @@
   <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="js/chat.js"></script>
   <style type="text/css">
-
+    .div_show_chat {
+      width: 360px;
+      height: 200px;
+      border: 1px solid blue;
+    }
+    .div_show_person {
+      width: 80px;
+      height: 200px;
+      border: 1px solid blue;
+    }
   </style>
 </head>
 <body>
@@ -15,12 +24,12 @@
     <div class="divTop">
       <div class="divL">
         <h2>Chat Box</h2>
-        <div class="divShow" id="divCount">
+        <div class="div_show_chat" id="divCount">
         </div>
       </div>
       <div class="divR">
         <h2>New Person: </h2>
-        <div class="divShow" id="divOnline">
+        <div class="div_show_person" id="divOnline">
         </div>
       </div>
     </div>

@@ -19,9 +19,15 @@ $(function (){
 
     // 收到服务器的消息
     websocket.onmessage = function (event) {
-      $("#divCount").html(event.data);
+      var message = $.parseJSON(event.data)
+      if (message.op === "messageList") {
+        // 服务端返回的数据显示到聊天列表
+        $("#divCount").html(message.value);
+      } else if (message.op === "userList") {
+        // 服务端返回的用户列表
+        $("#divOnline").html(message.value);
+      }
     }
-
     // 关闭
     websocket.onclose = function () {
     }
@@ -37,6 +43,11 @@ $(function (){
     if (content !== "") {
       // 发送ajax消息
       // sendMessage(content);
+
+      // websocket 发送消息
+      websocket.send(content);
+      // 清空消息发送框
+      $("#txtContent").val("");
     } else {
       alert("Send content can't empty!!!");
       return false;
@@ -66,7 +77,7 @@ $(function (){
     });
   }
 
-  // get message
+  // get message （ajax）
   function getMessage() {
     $.ajax({
       type: "post",
