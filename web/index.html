@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>用户登录</title>
-  <script type="text/javascript" src="WEB-INF/js/jquery-3.5.1.min.js"></script>
-
+  <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
   <script type="text/javascript">
     $(function () {
       $("#login").click(function () {
@@ -20,21 +20,27 @@
 
       function userLogin(name, pwd) {
         $.ajax({
-          url : "CharServlet",
+          url : "ChatServlet",
           type : "post",
           data : {
+            op: "login",
             username: name,
             password: pwd
           },
           success : function (data) {
-            alert(data);
+            if (data === "success") {
+              window.location = "chatMain.html";
+            } else {
+              alert(data)
+              $("#spnMsg").hide();
+              return false;
+            }
           }
         });
       }
 
     })
   </script>
-
 </head>
 <body>
   <div class="divFrame">
