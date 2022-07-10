@@ -32,3 +32,9 @@ session 和cookie的区别
 (3) session的数据存储在服务器，客户端浏览器无法干预，非常安全
     cookie的数据存储到浏览器，用户可以篡改和删除，不安全
 ## 借鉴的大佬
+
+## TODO
+缺一个用户logout的功能
+1.根据用户名移除用户在httpsession的信息
+2.移除在websocket里面的session信息
+3.刷新用户列表，但要保留他的聊天信息
