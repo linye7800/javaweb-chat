@@ -38,7 +38,7 @@ public class WebsocketServer {
 
 
     @OnOpen
-    public void open(Session session, EndpointConfig endpointConfig) {
+    public void open(Session session, EndpointConfig endpointConfig) throws InterruptedException {
         // 当一个客户端连接时，进入此方法
 
         // 获取http里面的httpsession会话
@@ -52,7 +52,7 @@ public class WebsocketServer {
 
 //        sendMsg("有一个客户端连上了， 叫： " + username);
         sendMsgByType("messageList");
-
+        Thread.sleep(1000);
         sendMsgByType("userList");
     }
 
@@ -143,9 +143,11 @@ public class WebsocketServer {
         String infoResponse;
         switch (type){
             // 用户聊天列表
-//            case "messageList":
-//                infoResponse = "{\"op\":\"messageList\",\"value\":\""+getChatList()+"\"}";
-//                break;
+            case "messageList":
+                infoResponse = "{\"op\":\"messageList\",\"value\":\""+getChatList()+"\"}";
+                info.setOp("messageList");
+                info.setValue(getChatList());
+                break;
             // 在线人员列表
             case "userList":
                 infoResponse = "{\"op\":\"userList\",\"value\":\""+getUserList()+"\"}";
@@ -162,7 +164,6 @@ public class WebsocketServer {
         JSONObject json = null;
         for (Session s : clients.values()) {
             // 转换成json格式
-//            json = JSONObject.parseObject(infoResponse);
             String jsonStr = JSON.toJSONString(info);
             System.out.println(jsonStr);
             s.getAsyncRemote().sendText(jsonStr);

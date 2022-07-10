@@ -31,11 +31,12 @@ $(function (){
     // 关闭
     websocket.onclose = function () {
     }
+    // 监听浏览器窗口关闭事件，当浏览器关闭时，断开与websocket服务器的连接（不然服务器端有异常）
+    window.onbeforeunload = function (){
+      websocket.close();
+    }
   }
 
-    function websocketSendMessage() {
-
-    }
 
   // 发送消息的点击事件
   $("#button1").click(function () {
